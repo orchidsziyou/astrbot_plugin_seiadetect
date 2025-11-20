@@ -1,4 +1,5 @@
 import os
+import random
 
 from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
 from astrbot.api.star import Context, Star, register
@@ -265,9 +266,17 @@ class MyPlugin(Star):
                             yield event.chain_result(message_chain)
                             return
                         else:
-                            message_chain = [
-                                Reply(id=reply_id),
-                                Plain("没找到我老婆")
-                            ]
+                            # 增加一个小概率出现其他的回复
+                            if random.random() < 0.1:
+                                message_chain = [
+                                    Reply(id=reply_id),
+                                    Plain("虽然没找到圣娅，但这也是我老婆")
+                                ]
+                            else:
+
+                                message_chain = [
+                                    Reply(id=reply_id),
+                                    Plain("没找到我老婆")
+                                ]
                             yield event.chain_result(message_chain)
                             return
